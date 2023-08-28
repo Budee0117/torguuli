@@ -34,6 +34,8 @@ class SearchScreen extends StatefulWidget {
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
+TextEditingController _numberController = TextEditingController();
+
 class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
@@ -41,9 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.grey,
-        actions: [IconButton(
-          onPressed: () {}, 
-          icon: const Icon(Icons.close))],
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.close))],
       ),
       body: Center(
         child: Column(
@@ -61,14 +61,15 @@ class _SearchScreenState extends State<SearchScreen> {
             const SizedBox(
               height: 50,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.all(56),
+                padding: const EdgeInsets.all(56),
                 child: SizedBox(
                     width: 300,
-                    height: 100,
+                    height: 50,
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: _numberController,
+                      decoration: const InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
                           border: OutlineInputBorder(
@@ -85,10 +86,11 @@ class _SearchScreenState extends State<SearchScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                    context, MaterialPageRoute(
-                      builder: (context) => Info()
-                      )
-                    );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Info(
+                                number: _numberController.text,
+                              )));
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.indigo[600],
@@ -109,18 +111,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-//  ListTile(
-//                 onTap: () {
-//                   Navigator.push(
-//                     context,
-//                     MaterialPageRoute(builder: (context) => Info()),
-//                   );
-//                 },
-//                 horizontalTitleGap: 0.0,
-//                 title: const Text(
-//                   'Хайх',
-//                   style: TextStyle(color: Colors.white),
-//                 ),
-//                 tileColor: Colors.blue,
-//               ),
